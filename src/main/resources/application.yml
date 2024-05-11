@@ -1,0 +1,41 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/practice_management_system?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+minio:
+  #桶名
+  bucket: student-plan
+  #存储路径
+  bucketPath: C:\minio\data\student-plan
+  #连接MinIO的url
+  url: http://127.0.0.1:9000
+  #MinIO用户名
+  userName: zhuojiawei
+  #MinIO密码
+  passWord: zhuojiawei
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+times:
+  encodeTime: 1
