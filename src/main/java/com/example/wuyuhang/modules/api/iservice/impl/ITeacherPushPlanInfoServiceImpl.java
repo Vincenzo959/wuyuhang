@@ -357,6 +357,7 @@ public class ITeacherPushPlanInfoServiceImpl implements ITeacherPushPlanInfoServ
                                     studentIdStudentInfoMap.get(studentPushPlanInfo.getUserId()).getUmajor() +
                                     studentIdStudentInfoMap.get(studentPushPlanInfo.getUserId()).getUclass()
                     );
+                    studentPushPlanInfo1.setId(studentPushPlanInfo.getId());
                     studentPushPlanInfo1.setPlanRealName(collect.get(studentPushPlanInfo.getBelongsPlanId()));
                     studentPushPlanInfoList.add(studentPushPlanInfo1);
                 });
@@ -377,6 +378,7 @@ public class ITeacherPushPlanInfoServiceImpl implements ITeacherPushPlanInfoServ
                                     studentIdStudentInfoMap.get(studentPushPlanInfo.getUserId()).getUmajor() +
                                     studentIdStudentInfoMap.get(studentPushPlanInfo.getUserId()).getUclass()
                     );
+                    studentPushPlanInfo1.setId(studentPushPlanInfo.getId());
                     studentPushPlanInfo1.setPlanRealName(collect.get(studentPushPlanInfo.getBelongsPlanId()));
                     studentPushPlanInfoList.add(studentPushPlanInfo1);
                 });
@@ -414,10 +416,7 @@ public class ITeacherPushPlanInfoServiceImpl implements ITeacherPushPlanInfoServ
             QueryWrapper<StudentPushPlanInfo> studentPushPlanInfoQueryWrapper = new QueryWrapper<>();
             studentPushPlanInfoQueryWrapper
                     .lambda()
-                    .eq(StudentPushPlanInfo::getIsDeleted, IS_DELETED)
-                    .in(StudentPushPlanInfo::getBelongsPlanId, teacherPushPlanInfoIdSet)
-                    .in(StudentPushPlanInfo::getUserId, studentIdSet)
-                    .like(StudentPushPlanInfo::getPlanName, studentPlanVo.getTitle());
+                    .eq(StudentPushPlanInfo::getIsDeleted, IS_DELETED);
             if (studentPlanVo.getIfScore() == 0) {
                 studentPushPlanInfoQueryWrapper.lambda().eq(StudentPushPlanInfo::getIfAssess, UN_ACCESS);
                 studentPushPlanInfoService.page(page, studentPushPlanInfoQueryWrapper);

@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 
 @RestController
-@RequestMapping("/minio")
+@RequestMapping("/api/minio")
 @Api("minio上传文件")
 public class MinioController {
 
@@ -36,6 +36,12 @@ public class MinioController {
     @GetMapping("/download/{fileName}")
     public Result<String> downloadFile(@PathVariable String fileName) {
         return new Result<String>().ok(url + "/" + bucket + "/" + fileName);
+    }
+
+    // 文件上传接口
+    @PostMapping("/userPlanUpload")
+    public Result<String> userPlanUpload(@RequestParam("file") MultipartFile file) {
+        return new Result<String>().ok(minIOUtils.uploadFile(file));
     }
 }
 

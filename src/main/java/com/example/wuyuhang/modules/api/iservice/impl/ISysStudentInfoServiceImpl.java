@@ -15,6 +15,7 @@ import com.example.wuyuhang.modules.api.service.SysUserLoginService;
 import com.example.wuyuhang.modules.api.util.*;
 import com.example.wuyuhang.modules.api.vo.SysStudentInfoVo;
 import com.example.wuyuhang.modules.api.vo.SysUserLoginVo;
+import com.example.wuyuhang.modules.api.vo.UserInfoShow;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -153,13 +154,53 @@ public class ISysStudentInfoServiceImpl implements ISysStudentInfoService {
                         .set(SysTeacherInfo::getEmail, Objects.nonNull(sysUserLoginVo.getEmail()) ?
                                 sysUserLoginVo.getEmail() : sysOldTeacherInfo.getEmail())
                         .set(SysTeacherInfo::getIsDeleted, Objects.nonNull(sysUserLoginVo.getIsDeleted()) ?
-                                sysUserLoginVo.getIsDeleted() : sysOldTeacherInfo.getIsDeleted()));
+                                sysUserLoginVo.getIsDeleted() : sysOldTeacherInfo.getIsDeleted())
+                        .set(SysTeacherInfo::getTmajor, Objects.nonNull(sysUserLoginVo.getMajor()) ?
+                                sysUserLoginVo.getMajor() : sysOldTeacherInfo.getTmajor())
+                        .set(SysTeacherInfo::getTgrade, Objects.nonNull(sysUserLoginVo.getGrade()) ?
+                                sysUserLoginVo.getGrade() : sysOldTeacherInfo.getTgrade())
+                        .set(SysTeacherInfo::getTclass, Objects.nonNull(sysUserLoginVo.getUclass()) ?
+                                sysUserLoginVo.getUclass() : sysOldTeacherInfo.getTclass())
+                );
                 return new Result<Boolean>().ok(flag1 && flag2);
             } else {
                 throw new IException("用户更新失败");
             }
         } catch (Exception ex) {
             throw new IException("未查到当前用户");
+        }
+    }
+
+    @Override
+    public Result<UserInfoShow> userInfoShow(Long id) {
+        SysUserLogin sysUserLogin = sysUserLoginService.getById(id);
+        if (Objects.nonNull(sysUserLogin)){
+            UserInfoShow userInfoShow = new UserInfoShow();
+            // 学生
+            if (sysUserLogin.getType() == 0){
+                SysStudentInfo student = sysStudentInfoService.getById(id);
+                userInfoShow.setAge(student.getAge().toString());
+                userInfoShow.setEmail(student.getEmail());
+                userInfoShow.setSex(student.getSex());
+                userInfoShow.setGrade(student.getUgrade());
+                userInfoShow.setUserName(sysUserLogin.getUserName());
+                userInfoShow.setUclass(student.getUclass());
+                userInfoShow.setMajor(student.getUmajor());
+                userInfoShow.setTelephoneNumber(student.getTelephoneNumber());
+            }else {
+                SysTeacherInfo teacher = sysTeacherInfoService.getById(id);
+                userInfoShow.setAge(teacher.getAge().toString());
+                userInfoShow.setEmail(teacher.getEmail());
+                userInfoShow.setSex(teacher.getSex());
+                userInfoShow.setGrade(teacher.getTgrade());
+                userInfoShow.setUserName(sysUserLogin.getUserName());
+                userInfoShow.setUclass(teacher.getTclass());
+                userInfoShow.setMajor(teacher.getTmajor());
+                userInfoShow.setTelephoneNumber(teacher.getTelephoneNumber());
+            }
+            return new Result<UserInfoShow>().ok(userInfoShow);
+        }else {
+            throw new IException("不存在该用户");
         }
     }
 }

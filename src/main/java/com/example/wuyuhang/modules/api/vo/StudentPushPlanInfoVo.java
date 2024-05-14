@@ -1,5 +1,7 @@
 package com.example.wuyuhang.modules.api.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -55,5 +57,9 @@ public class StudentPushPlanInfoVo implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
+
+    @ApiModelProperty(value = "planId")
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long id;
 
 }

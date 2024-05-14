@@ -6,13 +6,11 @@ import com.example.wuyuhang.modules.api.util.PageData;
 import com.example.wuyuhang.modules.api.util.Result;
 import com.example.wuyuhang.modules.api.vo.SysStudentInfoVo;
 import com.example.wuyuhang.modules.api.vo.SysUserLoginVo;
+import com.example.wuyuhang.modules.api.vo.UserInfoShow;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 卓佳伟
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api("用户增删改查接口")
 @RestController
-@RequestMapping("/userCrud")
+@RequestMapping("/api/userCrud")
 public class UserController {
 
     @Autowired
@@ -44,5 +42,11 @@ public class UserController {
     @ApiOperation("教师个人信息修改")
     public Result<Boolean> sysTeacherInfoUpdateAPI_003(@RequestBody SysUserLoginVo sysUserLoginVo){
         return iSysStudentInfoService.sysTeacherInfoUpdateAPI_003(sysUserLoginVo);
+    }
+
+    @PostMapping("/sysUserInfo/select/API_004/{id}")
+    @ApiOperation("个人信息查询")
+    public Result<UserInfoShow> userInfoShow(@PathVariable Long id){
+        return iSysStudentInfoService.userInfoShow(id);
     }
 }

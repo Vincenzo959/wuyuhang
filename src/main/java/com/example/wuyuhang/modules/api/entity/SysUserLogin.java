@@ -1,6 +1,8 @@
 package com.example.wuyuhang.modules.api.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
 public class SysUserLogin implements Serializable {
 
     @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty(value = "用户名称")

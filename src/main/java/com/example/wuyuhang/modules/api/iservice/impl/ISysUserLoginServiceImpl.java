@@ -52,7 +52,7 @@ public class ISysUserLoginServiceImpl implements ISysUserLoginService {
         }catch (Exception ex){
             throw new IException("登入失败，请重新登入");
         }
-        throw new IException("没有当前用户");
+        return new Result<SysUserLogin>().error("用户名或密码错误");
     }
 
     @Override

@@ -262,12 +262,12 @@ public class IStudentPushPlanInfoServiceImpl implements IStudentPushPlanInfoServ
                     studentPushPlanInfo.setIfAssess(0);
                     studentPushPlanInfo.setCreateTime(LocalDateTime.now());
                     studentPushPlanInfo.setIsDeleted(0);
+                    studentPushPlanInfo.setPclass(teacherPushPlanInfoList.get(0).getPclass());
                     boolean save = studentPushPlanInfoService.save(studentPushPlanInfo);
                     return new Result<Boolean>().ok(save);
                 } else {
                     throw new IException("该学生不属于这个课程");
                 }
-
             }
         }
         return new Result<Boolean>().ok(false);
